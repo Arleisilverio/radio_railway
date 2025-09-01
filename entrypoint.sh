@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/bin/sh
 set -e
 
-# Substitui as variáveis de ambiente no template de configuração
-envsubst < /etc/icecast2/icecast.xml > /etc/icecast2/icecast.xml
+# Gera o arquivo de configuração a partir do template
+envsubst < /app/icecast.xml.template > /app/icecast.xml
 
 # Inicia o Icecast
-icecast2 -n -c /etc/icecast2/icecast.xml
+exec icecast -c /app/icecast.xml

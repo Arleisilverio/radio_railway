@@ -1,16 +1,15 @@
 FROM debian:stable-slim
 
-RUN apt-get update && \
-    apt-get install -y icecast2 && \
-    rm -rf /var/lib/apt/lists/*
+# Instala o Icecast
+RUN apt-get update && apt-get install -y icecast2 && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /app
-
-COPY icecast.xml.template /etc/icecast2/icecast.xml
+# Copia os arquivos de configuração e entrypoint
+COPY icecast.xml /etc/icecast2/icecast.xml
 COPY entrypoint.sh /entrypoint.sh
-
 RUN chmod +x /entrypoint.sh
 
+# Expõe a porta que o Railway usa (irá mapear automaticamente)
 EXPOSE 8000
 
-ENTRYPOINT ["/entrypoint.sh"]
+CMD ["/entrypoint.sh"]
+

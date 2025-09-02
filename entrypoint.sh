@@ -1,8 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
-# Gera o arquivo de configuração a partir do template
-envsubst < /app/icecast.xml.template > /app/icecast.xml
+# Railway define a porta em $PORT, precisamos injetar no Icecast
+sed -i "s/{{PORT}}/${PORT}/g" /etc/icecast2/icecast.xml
 
-# Inicia o Icecast
-exec icecast -c /app/icecast.xml
+exec icecast2 -c /etc/icecast2/icecast.xml -n
+
